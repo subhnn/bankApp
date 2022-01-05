@@ -5,19 +5,26 @@
 
   <h4><b> LOGIN</b></h4>
   <div id="div1" class="container border border rounded">
-   <form action="">
+   <form  [formGroup]="loginForm" (ngSubmit)="login()" >
 
       <fieldset>
           <label id="l1" for="">Account number:</label>
-          <input type="text" id="Ac_no" class="form-control border-rounder"><br>
-          <label id="a1" for="">password</label><br>
-          <input  type="text" id="Pass" class="form-control border-rounded" ><br>
-          <button  type="button" class="btn btn-success form-control" id="btn" onclick="bank.login()"  >login</button><br>
+          <input type="text" id="Ac_no" class="form-control border-rounder"  formControlName="acno" name="second"><br>
+          <div *ngIf="(this.loginForm.get('acno')?.touched||this.loginForm.get('acno')?.dirty)&&this.loginForm.get('acno')?.errors">invalid account number</div>
+
+          <label id="a1" for="">Password</label><br>
+          <input  type="text" id="Pass" class="form-control border-rounded" formControlName="pswd" name="first"><br>
+          <div *ngIf="(this.loginForm.get('pswd')?.touched||this.loginForm.get('pswd')?.dirty)&&this.loginForm.get('pswd')?.errors">invalid password</div>
+
+          <button  type="submit" class="btn btn-success form-control" id="btn"  >login</button><br>
+          <a routerLink="register">Register</a>
 
       </fieldset>
    </form>
 
   </div>
+  <p>{{aim}}</p>
+
   </div>
   <div class="col-4"></div>
 </div>

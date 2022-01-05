@@ -1,0 +1,15 @@
+<table>
+<tr>
+  <th>slno&nbsp;&nbsp;&nbsp;</th>
+  <th>TYPE &nbsp;&nbsp;&nbsp;</th>
+  <th>AMOUNT</th>
+
+</tr>
+<tr  *ngFor="let trans of transactions;let i=index">
+  <td>{{i+1}}</td>
+  <td>{{trans.type}}</td>
+  <td>{{trans.amount}}</td>
+</tr>
+</table>
+
+<a routerLink="/dashboard">Home page</a>

@@ -1,0 +1,62 @@
+<h1>welcome {{user}}</h1>
+<a routerLink="/transaction">Transaction History</a>
+<div class=row>
+  <div id="d1" class="col-4"></div>
+  <div class="col-4">
+
+  <h4><b>Deposit Form</b></h4>
+  <div id="div1" class="container border border rounded">
+   <form  [formGroup]="depositForm" (ngSubmit)="Deposit()">
+
+      <fieldset>
+          <label id="l1" for="">Account number:</label>
+          <input type="text" id="Ac_no" class="form-control border-rounder"formControlName="acno"  name="second">
+          <div *ngIf="(this.depositForm.get('acno')?.touched||this.depositForm.get('acno')?.dirty)&&this.depositForm.get('acno')?.errors">invalid account number</div><br>
+
+          <label id="a1" for="">Password</label><br>
+          <input  type="text" id="Pass" class="form-control border-rounded" formControlName="pswd" name="first"><br>
+          <label for="">Amount</label>
+          <input type="text" class="form-control border-rounded"formControlName="amount" name="third" ><br>
+          <button  type="submit" class="btn btn-success form-control" id="btn" >deposit</button><br>
+          <!-- <a routerLink="register">Register</a> -->
+
+      </fieldset>
+   </form>
+
+  </div>
+
+
+  </div>
+  <div class="col-4"></div>
+</div>
+
+<div class=row>
+  <div id="d1" class="col-4"></div>
+  <div class="col-4">
+
+  <h4 id="m1"><b>Withdrawal Form</b></h4>
+  <div id="div2" class="container border border rounded">
+   <form action="" (ngSubmit)="withdraw()">
+
+      <fieldset>
+          <label id="l1" for="">Account number:</label>
+          <input type="text" id="Ac_no" class="form-control border-rounder"[(ngModel)]="acno1"  name="second"><br>
+          <label id="a1" for="">Password</label><br>
+          <input  type="text" id="Pass" class="form-control border-rounded" [(ngModel)]="pswd1" name="first"><br>
+          <label for="">Amount</label>
+          <input type="text" class="form-control border-rounded"[(ngModel)]="amount1" name="third" ><br>
+
+          <button  type="submit" class="btn btn-success form-control" id="btn" >withdraw</button><br>
+          <!-- <a routerLink="register">Register</a> -->
+
+      </fieldset>
+   </form>
+
+  </div>
+
+
+  </div>
+  <div class="col-4"></div>
+</div>
+
+
