@@ -1,5 +1,7 @@
+// import { getInterpolationArgsLength } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { DataService } from '../service/data.service';
 
@@ -27,12 +29,29 @@ export class DashboardComponent implements OnInit {
     pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
     amount:['',[Validators.required,Validators.pattern('[0-9]*')]]
   })
+  withdrawForm=this.fb.group({
+    acno1:['',[Validators.required,Validators.pattern('[0-9]*')]],
+    pswd1:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
+    amount1:['',[Validators.required,Validators.pattern('[0-9]*')]]
+  })
 
-user=this.ds.currentName
 
-  constructor(private ds:DataService,private fb:FormBuilder) { }
+user:any
+Acno=""
+ldate:any
+  router: any;
+  constructor(private ds:DataService,private fb:FormBuilder,private rt:Router) {
+    this.user=JSON.parse(localStorage.getItem("currentUserName")||'')
+    this.ldate=new Date()
+
+  }
 
   ngOnInit(): void {
+    if(!localStorage.getItem("token")){
+      this.rt.navigateByUrl("")
+
+      alert("please login")
+    }
   }
 
 
@@ -44,31 +63,87 @@ user=this.ds.currentName
 
 
     if(this.depositForm.valid){
-      let result=this.ds.Deposit(acno,pswd,amount)
+      this.ds.Deposit(acno,pswd,amount)
+.subscribe((result:any)=>{
 
       if(result){
-        alert(amount+"credited.current balance is:"+ result)
-      }
+        alert(result.message)
+      }},
+
+      (result)=>{
+        alert(result.error.message)
+      })}
+
       else{
         alert("invalid form")
       }
 
+
     }
 
 
-    }
+
 
   withdraw(){
-    var acno=this.acno1
-    var pswd=this.pswd1
-    var amount=this.amount1
+    var acno=this.withdrawForm.value.acno1
+    var pswd=this.withdrawForm.value.pswd1
+    var amount=this.withdrawForm.value.amount1
 
-    let result=this.ds.withdaw(acno,pswd,amount)
 
-    if (result){
-      alert(amount+"debited.current balance is:"+ result)
+
+    if(this.withdrawForm.valid){
+      this.ds.withdraw(acno,pswd,amount)
+.subscribe((result:any)=>{
+
+      if(result){
+        alert(result.message)
+      }},
+
+      (result)=>{
+        alert(result.error.message)
+      })}
+
+      else{
+        alert("invalid form")
+      }
+
+
     }
 
-  }
+
+deleteFromParent(){
+  this.Acno=JSON.parse(localStorage.getItem("currentAcno")||'')
+}
+
+
+delete(event:any){
+
+this.ds.delete(event)
+.subscribe((result:any)=>{
+
+if(result){
+  alert(result.message)
+
+this.router.navigateByUrl("")
+
+}
+},
+(result)=>{
+  alert(result.error.message)
+}
+)
+
+}
+cancel(){
+  this.Acno=""
+}
+logout(){
+
+  localStorage.removeItem("currentAcno")
+  localStorage.removeItem("currentUserName")
+  localStorage.removeItem("token")
+  this.rt.navigateByUrl("")
+}
+
 
 }

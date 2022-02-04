@@ -52,13 +52,27 @@ login(){
 
 if(this.loginForm.valid){
 
-let result=this.ds.login(acno,password)
+  // asynchronus
+this.ds.login(acno,password)
+.subscribe((result:any)=>{
 
-if(result){
-  alert("login successfull")
+  if(result){
+    alert(result.message)
+    localStorage.setItem("currentAcno",JSON.stringify(result.currentAcno))
+    localStorage.setItem("currentUserName",JSON.stringify(result.currentUserName))
+    localStorage.setItem("token",JSON.stringify(result.token))
 
-this.router.navigateByUrl("dashboard")
-}}
+  this.router.navigateByUrl("dashboard")
+  }
+},
+(result)=>{
+  alert(result.error.message);
+
+}
+
+
+)
+}
 else{
   alert("invalid form")
 }

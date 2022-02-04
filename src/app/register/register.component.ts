@@ -34,17 +34,28 @@ Register(){
   var acno=this.registerForm.value.acno
   var pswd=this.registerForm.value.pswd
 
-  let result=this.ds.register(acno,pswd,uname)
+
+  
+// asynchronus
 
 
-  if(result){
-    alert("account registerd successfully")
-    this.router.navigateByUrl('')
+  this.ds.register(acno,pswd,uname)
+  .subscribe((result:any)=>{
+
+    if(result){
+      alert("account registerd successfully")
+      this.router.navigateByUrl('')
+    }
+
+
+  },
+  (result)=>{
+    alert(result.error.message)
   }
-  else{
-    alert("account number already exist")
+
+  )
+
   }
-}
   else{
     alert("invalid form")
   }

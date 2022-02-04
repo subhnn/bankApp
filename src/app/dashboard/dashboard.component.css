@@ -27,8 +27,8 @@ a{
 }
 #div2{
   margin-left: 50px;
-  margin-top: -334px;
-  height: 335px;
+  margin-top: -353px;
+  height: 350px;
   width: 320px;
   background-color: rgb(250, 250, 250)
 
@@ -37,4 +37,8 @@ a{
   margin-left: 127px;
   margin-top: -434px;
   position: absolute;
+}
+.s1{
+  background-color:gray;
+opacity: 0.1;
 }

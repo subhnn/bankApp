@@ -1,11 +1,20 @@
-<h1>welcome {{user}}</h1>
-<a routerLink="/transaction">Transaction History</a>
-<div class=row>
-  <div id="d1" class="col-4"></div>
+<h1>welcome {{user}}</h1><br>
+
+<p> &nbsp;&nbsp;&nbsp;................ login time:{{ldate|date:'shortTime'}}</p>
+
+<a routerLink="/transaction">Transaction History</a><br><br>
+
+<button class="btn btn-danger " (click)="deleteFromParent()">  Delete account</button><br><br>
+<button class="btn btn-danger"   (click)="logout()">logout</button>
+<app-deletecomponent [item]="Acno" (onDelete)="delete($event)" (onCancel)="cancel()"></app-deletecomponent>
+
+<app-animation> </app-animation>
+<div class=row [ngClass]="Acno? 's1':''">
+  <div id="d1" class="col-4" ></div>
   <div class="col-4">
 
-  <h4><b>Deposit Form</b></h4>
-  <div id="div1" class="container border border rounded">
+  <h4 ><b>Deposit Form</b></h4>
+  <div  id="div1" class="container border border rounded">
    <form  [formGroup]="depositForm" (ngSubmit)="Deposit()">
 
       <fieldset>
@@ -30,21 +39,24 @@
   <div class="col-4"></div>
 </div>
 
-<div class=row>
+<div class=row [ngClass]="Acno? 's1':''">
   <div id="d1" class="col-4"></div>
   <div class="col-4">
 
-  <h4 id="m1"><b>Withdrawal Form</b></h4>
+  <h4 id="m1" appHighlight><b>Withdrawal Form</b></h4>
   <div id="div2" class="container border border rounded">
-   <form action="" (ngSubmit)="withdraw()">
+   <form [formGroup]="withdrawForm" (ngSubmit)="withdraw()">
 
       <fieldset>
           <label id="l1" for="">Account number:</label>
-          <input type="text" id="Ac_no" class="form-control border-rounder"[(ngModel)]="acno1"  name="second"><br>
+          <input type="text" id="Ac_no" class="form-control border-rounder"formControlName="acno1"  name="second"><br>
+          <div *ngIf="(this.withdrawForm.get('acno1')?.touched||this.withdrawForm.get('acno1')?.dirty)&&this.withdrawForm.get('acno1')?.errors">invalid account number</div><br>
+
           <label id="a1" for="">Password</label><br>
-          <input  type="text" id="Pass" class="form-control border-rounded" [(ngModel)]="pswd1" name="first"><br>
+          <input  type="text" id="Pass" class="form-control border-rounded" formControlName="pswd1" name="first"><br>
+
           <label for="">Amount</label>
-          <input type="text" class="form-control border-rounded"[(ngModel)]="amount1" name="third" ><br>
+          <input type="text" class="form-control border-rounded"formControlName="amount1" name="third" ><br>
 
           <button  type="submit" class="btn btn-success form-control" id="btn" >withdraw</button><br>
           <!-- <a routerLink="register">Register</a> -->
